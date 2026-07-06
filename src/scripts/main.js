@@ -1,39 +1,16 @@
 'use strict';
 
-const allobj = [];
+const thead = document.querySelectorAll('thead tr, tbody tr, tfoot tr')
 
-const allofthat = document.querySelectorAll('tbody tr');
+thead.forEach(function (each) {
+  const cells = each.children;
+  const targetCell = cells[1];
 
-allofthat.forEach(function (eachobj) {
-  const eachsentence = eachobj.querySelectorAll('td');
+  if (cells.length >= 2) {
+    const clonedCell = targetCell.cloneNode(true);
 
-  const newdata = {
-    name: eachsentence[0].textContent.trim(),
-    position: eachsentence[1].textContent.trim(),
-    Office: eachsentence[2].textContent.trim(),
-    age: eachsentence[3].textContent.trim(),
-    salary: eachsentence[4].textContent.trim(),
-  };
+    const lastCell = cells[cells.length - 1];
 
-  allobj.push(newdata);
-});
-
-
-
-const tfoot  = document.querySelector('tfoot');
-
-allobj.forEach(function(eachobj) {
-
-  const newtr = document.createElement('tr');
-
-  for (const key in eachobj) {
-
-    const current = eachobj[key];
-    const newtd = document.createElement('td');
-    newtd.textContent = current;
-    newtr.append(newtd);
+    each.insertBefore(clonedCell, lastCell);
   }
-
-  tfoot.append(newtr);
-
 });
